@@ -28,7 +28,7 @@ with open(budget_data_csv, 'r') as csvfile:
     number_months = 0
 
     # Count the number of months
-    for i in range(1, len(budgetdata)):
+    for i in range(1,len(budgetdata)):
         number_months += 1
 
     print("Total months: " + str(number_months))

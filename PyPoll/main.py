@@ -1,17 +1,23 @@
 import os
 import csv
 
+#os.chdir(os.path.dirname(__file__))
+
+print('\n')
 print("Election Results")
 print("-------------------------------")
 
 #Open the text file to write results to
 f = open("pollresults.txt", "w")
+f.write("\n")
 f.write("Election Results\n")
 f.write("------------------------------\n")
 
+
+
 # Path to collect data from the Resources folder
-#election_data_csv = os.path.join('..','..', 'Resources', 'election_data.csv')
-election_data_csv = "C:\\Users\\dawnb\\Desktop\\python-challenge\\Resources\\election_data.csv"
+election_data_csv = os.path.join('..', 'Resources', 'election_data.csv')
+#election_data_csv = "C:\\Users\\dawnb\\Desktop\\python-challenge\\Resources\\election_data.csv"
 
 # Create lists
 #profit_change = []
@@ -42,40 +48,35 @@ with open(election_data_csv, 'r') as csvfile:
             percanditate[index] += 1
         totalVotes += 1
     print("Total Votes: " + str(totalVotes))
+    print("-------------------------------")
     f.write("Total Votes: " + str(totalVotes) + "\n")
-        
-    print(candidates)
-    print(percanditate)
-    print(electionData)
-
+    f.write("------------------------------\n")
         
 
-     # total number of votes cast for each candidate
-#### DAWN's QUESTIONABLE CODE
-"""
 
-    candidates = []
-    for row in electionData:
-        if row[2] not in candidates:
-            candidates.append(row[2])
-    print(candidates)
+    # Create precent of total in new list for each candidate
+    percentList = []
+    for i in percanditate:
+        percentTotal = (i / totalVotes) * 100
+        percentList.append(percentTotal)
 
-#    from collections import Counter
-#    z = list(electionData)
-#    Counter(z)
+    # Zip all three lists together into tuple
+    results = zip(candidates, percanditate, percentList)
+    
+    winningVotes = 0
+    winner = ""
+    for i in range(0,len(candidates)):
+        print(candidates[i] + ": " + str(round(percentList[i],3)) + "% (" + str(percanditate[i]) + ")")
+        f.write(candidates[i] + ": " + str(round(percentList[i],3)) + "% (" + str(percanditate[i]) + ")" + "\n")
+        #print(candidates[i] + ": " + str(round(percentList[i],3)) + " (" + str(percanditate[i])) + ")"))
 
-
-#>>> z = ['blue', 'red', 'blue', 'yellow', 'blue', 'red']
-#>>> Counter(z)
-#Counter({'blue': 3, 'red': 2, 'yellow': 1})
-
-
-#A complete list of candidates who received votes
-
-   
-#The percentage of votes each candidate won
-for row in electionData:
-
-#The total number of votes each candidate won
-#The winner of the election based on popular vote.
-"""
+        # Calculate the winner
+        if percentList[i] > winningVotes:
+            winningVotes = percentList[i]
+            winner = candidates[i]
+    print("-------------------------------")
+    print("Winner: " + winner) 
+    print("-------------------------------")
+    f.write("------------------------------\n")
+    f.write("Winner: " + winner + "\n")
+    f.write("------------------------------\n")
