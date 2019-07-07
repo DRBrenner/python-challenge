@@ -106,7 +106,6 @@ with open(employee_data_csv, 'r') as csvfile:
 # Zip lists together
 improved_csv = zip(employeeId,firstName,lastName,correctDOB, correctSSN, correctStates)
 
-
 # Set variable for output file
 output_file = os.path.join("employee_data_improved.csv")
 
